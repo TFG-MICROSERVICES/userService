@@ -11,8 +11,9 @@ import { userSchema } from '../schemas/userSchema.js';
 
 export async function registerUserController(req, res, next) {
     try {
-        console.log(req.body);
         const validate = await userSchema.validateAsync(req.body,{stripUnknown: true});
+
+        console.log("Validate",validate);
 
         const user = await registerUser(validate);
     

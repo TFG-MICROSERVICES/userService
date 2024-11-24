@@ -21,10 +21,10 @@ export const userSchema = Joi.object({
         'string.email': 'email must be a valid email',
         'string.max': 'email must be at most 255 characters',
     }),
-    image_profile: Joi.string().allow(null).messages({
+    image_profile: Joi.string().allow(null,"").messages({
         'string.base': 'image_profile must be a string',
     }),
-    phone_number: Joi.string().max(20).allow(null).messages({
+    phone_number: Joi.string().max(20).allow(null,"").messages({
         'string.base': 'phone_number must be a string',
         'string.max': 'phone_number must be at most 20 characters',
     }),
