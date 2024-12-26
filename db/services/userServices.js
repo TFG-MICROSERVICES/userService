@@ -78,29 +78,13 @@ export async function updateUser(data, email){
 export async function updateEmail(newEmail, email){
     try {
 
-        const existsUser = await User.findOne({
-            where: {
-                email: email
-            }
-        });
-
-        if(!existsUser) generateError('User not found', 404);
-
-        const existsNewEmail = await User.findOne({
-            where: {
-                email: newEmail
-            }
-        });
-
-        if(existsNewEmail) generateError('Email already exists', 400);
-
         const user = await User.update({email: newEmail}, {
             where: {
                 email: email
             }
         });
 
-        if(!user) generateError('User not found', 404);
+        if(!user) generateError('Not update email', 404);
 
         const newUser = await User.findOne({
             where: {

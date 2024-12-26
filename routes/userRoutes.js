@@ -19,7 +19,7 @@ router.get('/',validateApiKey, getUsersController);
 
 router.put('/:email', validateApiKey, updateUserController);
 
-router.patch('/:email', validateApiKey, updateUserEmailController);
+router.patch('/email/:email', validateApiKey, updateUserEmailController);
 
 router.delete('/:email', validateApiKey, deleteUserController);
 
