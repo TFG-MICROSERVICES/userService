@@ -47,13 +47,6 @@ export async function getUsers(){
 export async function updateUser(data, email){
     try {
         console.log(data);
-        const existsUser = await User.findOne({
-            where: {
-                email: email
-            }
-        });
-
-        if(!existsUser) generateError('User not found', 404);
 
         const [updatedRows] = await User.update(data, {
             where: {
@@ -63,12 +56,8 @@ export async function updateUser(data, email){
 
         if (updatedRows === 0) generateError('User not updated', 404);
 
-        const newUser = await User.findOne({
-            where: {
-                email: email
-            }
-        });
-
+        const newUser = getUserByEmail(email);
+        
         return newUser;
     } catch (error) {
         generateError(error.message, error.status);
