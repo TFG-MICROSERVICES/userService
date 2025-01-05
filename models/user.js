@@ -51,4 +51,6 @@ export const User = database.define("User", {
         allowNull: false,
         max: 255,
     },
+},{
+    tableName: "Users"
 });

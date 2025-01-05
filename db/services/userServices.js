@@ -111,8 +111,6 @@ export async function deleteUser(email){
             }
         });
 
-        if(!user) generateError('User not found', 404);
-
         return user;
     } catch (error) {
         generateError(error.message, error.status);
