@@ -37,7 +37,7 @@ export const userSchema = Joi.object({
         'string.base': 'city must be a string',
         'string.max': 'city must be at most 255 characters',
     }),
-    country: Joi.string().max(255).required().messages({
+    autonomous_region: Joi.string().max(255).required().messages({
         'any.required': 'country is required',
         'string.base': 'country must be a string',
         'string.max': 'country must be at most 255 characters',

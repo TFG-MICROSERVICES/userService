@@ -46,7 +46,7 @@ export const User = database.define("User", {
         allowNull: false,
         max: 255,
     },
-    country: {
+    autonomous_region: {
         type: DataTypes.STRING,
         allowNull: false,
         max: 255,

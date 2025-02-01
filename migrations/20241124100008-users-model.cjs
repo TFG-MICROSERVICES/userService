@@ -48,7 +48,7 @@ module.exports = {
         allowNull: false,
         max: 255,
       },
-      country: {
+      autonomous_region: {
         type: Sequelize.STRING,
         allowNull: false,
         max: 255,

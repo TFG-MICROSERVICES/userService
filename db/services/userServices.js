@@ -4,7 +4,6 @@ import { generateError } from '../../utils/generateError.js';
 
 export async function registerUser(data) {
     try {
-        console.log(data);
         const user = await User.create(data);
 
         if(!user) generateError('Error creating user', 500);
