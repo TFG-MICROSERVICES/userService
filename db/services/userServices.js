@@ -1,4 +1,4 @@
-import { where } from 'sequelize';
+import { Op, where } from 'sequelize';
 import { User } from '../../models/user.js';
 import { generateError } from '../../utils/generateError.js';
 
@@ -31,9 +31,18 @@ export async function getUserByEmail(email) {
     }
 }
 
-export async function getUsers(){
+export async function getUsers(search = null) {
     try {
-        const users = await User.findAll();
+        const users = await User.findAll({
+            where: search ? {
+                [Op.or]: [
+                    { name: { [Op.like]: `%${search}%` } },
+                    { lastName: { [Op.like]: `%${search}%` } },
+                    { email: { [Op.like]: `%${search}%` } },
+                    { phone_number: { [Op.like]: `%${search}%` } },
+                ]
+            } : {},
+        });
 
         if(!users) generateError('Users not found', 404);
 

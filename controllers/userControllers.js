@@ -45,7 +45,8 @@ export async function getUserByEmailController(req, res, next) {
 
 export async function getUsersController(req, res, next) {
     try {
-        const users = await getUsers();
+        const { search } = req.query;
+        const users = await getUsers(search);
 
         res.status(200).json({
             message: "Users found",
