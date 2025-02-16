@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("Users", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -30,7 +30,7 @@ module.exports = {
         max: 255,
       },
       image_profile: {
-        type: Sequelize.TEXT('long'),
+        type: Sequelize.TEXT("long"),
         allowNull: true,
       },
       phone_number: {
@@ -64,7 +64,7 @@ module.exports = {
     });
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("Users");
+  },
 };
