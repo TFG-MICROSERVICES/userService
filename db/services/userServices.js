@@ -6,7 +6,7 @@ export async function registerUser(data) {
     try {
         const user = await User.create(data);
 
-        if(!user) generateError('Error creating user', 500);
+        if (!user) generateError('Error creating user', 500);
 
         return user;
     } catch (error) {
@@ -19,11 +19,11 @@ export async function getUserByEmail(email) {
     try {
         const user = await User.findOne({
             where: {
-                email: email
-            }
+                email: email,
+            },
         });
 
-        if(!user) generateError('User not found', 404);
+        if (!user) generateError('User not found', 404);
 
         return user;
     } catch (error) {
@@ -34,17 +34,19 @@ export async function getUserByEmail(email) {
 export async function getUsers(search = null) {
     try {
         const users = await User.findAll({
-            where: search ? {
-                [Op.or]: [
-                    { name: { [Op.like]: `%${search}%` } },
-                    { lastName: { [Op.like]: `%${search}%` } },
-                    { email: { [Op.like]: `%${search}%` } },
-                    { phone_number: { [Op.like]: `%${search}%` } },
-                ]
-            } : {},
+            where: search
+                ? {
+                      [Op.or]: [
+                          { name: { [Op.like]: `%${search}%` } },
+                          { lastName: { [Op.like]: `%${search}%` } },
+                          { email: { [Op.like]: `%${search}%` } },
+                          { phone_number: { [Op.like]: `%${search}%` } },
+                      ],
+                  }
+                : {},
         });
 
-        if(!users) generateError('Users not found', 404);
+        if (!users) generateError('Users not found', 404);
 
         return users;
     } catch (error) {
@@ -52,41 +54,43 @@ export async function getUsers(search = null) {
     }
 }
 
-export async function updateUser(data, email){
+export async function updateUser(data, email) {
     try {
         console.log(data);
 
         const [updatedRows] = await User.update(data, {
             where: {
-                email: email
-            }
+                email: email,
+            },
         });
 
         if (updatedRows === 0) generateError('User not updated', 404);
 
         const newUser = getUserByEmail(email);
-        
+
         return newUser;
     } catch (error) {
         generateError(error.message, error.status);
     }
 }
 
-export async function updateEmail(newEmail, email){
+export async function updateEmail(newEmail, email) {
     try {
-
-        const user = await User.update({email: newEmail}, {
-            where: {
-                email: email
+        const user = await User.update(
+            { email: newEmail },
+            {
+                where: {
+                    email: email,
+                },
             }
-        });
+        );
 
-        if(!user) generateError('Not update email', 404);
+        if (!user) generateError('Not update email', 404);
 
         const newUser = await User.findOne({
             where: {
-                email: newEmail
-            }
+                email: newEmail,
+            },
         });
 
         return newUser.email;
@@ -95,15 +99,15 @@ export async function updateEmail(newEmail, email){
     }
 }
 
-export async function updateUserImage(data, email){
+export async function updateUserImage(data, email) {
     try {
         const user = await User.update(data, {
             where: {
-                email: email
-            }
+                email: email,
+            },
         });
 
-        if(!user) generateError('User not found', 404);
+        if (!user) generateError('User not found', 404);
 
         return user;
     } catch (error) {
@@ -111,12 +115,12 @@ export async function updateUserImage(data, email){
     }
 }
 
-export async function deleteUser(email){
+export async function deleteUser(email) {
     try {
         const user = await User.destroy({
             where: {
-                email: email
-            }
+                email: email,
+            },
         });
 
         return user;
