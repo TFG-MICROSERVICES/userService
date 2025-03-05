@@ -1,4 +1,4 @@
-import { registerUser, getUserByEmail, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
+import { registerUser, getUserById, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
 import { generateError } from '../utils/generateError.js';
 import { userSchema } from '../schemas/userSchema.js';
 
@@ -19,13 +19,13 @@ export async function registerUserController(req, res, next) {
     }
 }
 
-export async function getUserByEmailController(req, res, next) {
+export async function getUserByIdController(req, res, next) {
     try {
-        const { email } = req.params;
+        const { id } = req.params;
 
-        if (!email) generateError('Email is required', 400);
+        if (!id) generateError('Id is required', 400);
 
-        const user = await getUserByEmail(email);
+        const user = await getUserById(id);
 
         res.status(200).json({
             message: 'User found',
@@ -70,14 +70,13 @@ export async function updateUserController(req, res, next) {
 
 export async function updateUserEmailController(req, res, next) {
     try {
-        const { email } = req.params;
+        const { id } = req.params;
         const { newEmail } = req.body;
 
-        if (!email) generateError('Email is required', 400);
+        if (!id) generateError('Id is required', 400);
         if (!newEmail) generateError('New email is required', 400);
-        if (email === newEmail) generateError('Emails must be different', 400);
 
-        const user = await updateEmail(newEmail, email);
+        const user = await updateEmail(newEmail, id);
 
         res.status(200).json({
             message: 'Email updated',
@@ -90,13 +89,13 @@ export async function updateUserEmailController(req, res, next) {
 
 export async function updateUserPasswordController(req, res, next) {
     try {
-        const { email } = req.params;
+        const { id } = req.params;
         const { password } = req.body;
 
-        if (!email) generateError('Email is required', 400);
+        if (!id) generateError('Id is required', 400);
         if (!password) generateError('Password is required', 400);
 
-        const user = await updateUserPassword(password, email);
+        const user = await updateUserPassword(password, id);
 
         res.status(200).json({
             message: 'Password updated',
@@ -109,11 +108,11 @@ export async function updateUserPasswordController(req, res, next) {
 
 export async function deleteUserController(req, res, next) {
     try {
-        const { email } = req.params;
+        const { id } = req.params;
 
-        if (!email) generateError('Email is required', 400);
+        if (!id) generateError('Id is required', 400);
 
-        await deleteUser(email);
+        await deleteUser(id);
 
         res.status(200).json({
             message: 'User deleted',

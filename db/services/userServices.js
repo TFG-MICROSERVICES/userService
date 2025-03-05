@@ -15,13 +15,9 @@ export async function registerUser(data) {
     }
 }
 
-export async function getUserByEmail(email) {
+export async function getUserById(id) {
     try {
-        const user = await User.findOne({
-            where: {
-                email: email,
-            },
-        });
+        const user = await User.findByPk(id);
 
         if (!user) generateError('User not found', 404);
 
@@ -54,19 +50,19 @@ export async function getUsers(search = null) {
     }
 }
 
-export async function updateUser(data, email) {
+export async function updateUser(data, id) {
     try {
         console.log(data);
 
         const [updatedRows] = await User.update(data, {
             where: {
-                email: email,
+                id: id,
             },
         });
 
         if (updatedRows === 0) generateError('User not updated', 404);
 
-        const newUser = getUserByEmail(email);
+        const newUser = getUserById(id);
 
         return newUser;
     } catch (error) {
@@ -74,24 +70,20 @@ export async function updateUser(data, email) {
     }
 }
 
-export async function updateEmail(newEmail, email) {
+export async function updateEmail(newEmail, id) {
     try {
         const user = await User.update(
             { email: newEmail },
             {
                 where: {
-                    email: email,
+                    id: id,
                 },
             }
         );
 
         if (!user) generateError('Not update email', 404);
 
-        const newUser = await User.findOne({
-            where: {
-                email: newEmail,
-            },
-        });
+        const newUser = await getUserById(id);
 
         return newUser.email;
     } catch (error) {
@@ -99,27 +91,11 @@ export async function updateEmail(newEmail, email) {
     }
 }
 
-export async function updateUserImage(data, email) {
-    try {
-        const user = await User.update(data, {
-            where: {
-                email: email,
-            },
-        });
-
-        if (!user) generateError('User not found', 404);
-
-        return user;
-    } catch (error) {
-        generateError(error.message, error.status);
-    }
-}
-
-export async function deleteUser(email) {
+export async function deleteUser(id) {
     try {
         const user = await User.destroy({
             where: {
-                email: email,
+                id: id,
             },
         });
 

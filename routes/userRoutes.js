@@ -1,7 +1,7 @@
 import express from 'express';
 import {
     registerUserController,
-    getUserByEmailController,
+    getUserByIdController,
     getUsersController,
     updateUserController,
     updateUserEmailController,
@@ -13,14 +13,14 @@ const router = express.Router();
 
 router.post('/register', validateApiKey, registerUserController);
 
-router.get('/:email', validateApiKey, getUserByEmailController);
+router.get('/:id', validateApiKey, getUserByIdController);
 
 router.get('/', validateApiKey, getUsersController);
 
-router.put('/:email', validateApiKey, updateUserController);
+router.put('/:id', validateApiKey, updateUserController);
 
-router.patch('/email/:email', validateApiKey, updateUserEmailController);
+router.patch('/emil/:id', validateApiKey, updateUserEmailController);
 
-router.delete('/:email', validateApiKey, deleteUserController);
+router.delete('/:id', validateApiKey, deleteUserController);
 
 export default router;
