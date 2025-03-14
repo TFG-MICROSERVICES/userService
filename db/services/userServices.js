@@ -17,7 +17,11 @@ export async function registerUser(data) {
 
 export async function getUserById(id) {
     try {
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(id, {
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt'],
+            },
+        });
 
         if (!user) generateError('User not found', 404);
 
@@ -30,6 +34,9 @@ export async function getUserById(id) {
 export async function getUsers(search = null) {
     try {
         const users = await User.findAll({
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt'],
+            },
             where: search
                 ? {
                       [Op.or]: [
