@@ -1,4 +1,4 @@
-import { registerUser, getUserById, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
+import { registerUser, getUserById, getUserByEmail, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
 import { generateError } from '../utils/generateError.js';
 import { userSchema } from '../schemas/userSchema.js';
 
@@ -11,7 +11,26 @@ export async function registerUserController(req, res, next) {
         const user = await registerUser(validate);
 
         res.status(201).json({
-            message: 'User registered successfully',
+            status: 201,
+            message: 'Usuario registrado correctamente',
+            user,
+        });
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
+export async function getUserByIdController(req, res, next) {
+    try {
+        const { user_id } = req.params;
+
+        if (!user_id) generateError('User id is required', 400);
+
+        const user = await getUserById(user_id);
+
+        res.status(200).json({
+            message: 'Usuario encontrado',
             user,
         });
     } catch (error) {
@@ -19,16 +38,16 @@ export async function registerUserController(req, res, next) {
     }
 }
 
-export async function getUserByIdController(req, res, next) {
+export async function getUserByEmailController(req, res, next) {
     try {
-        const { id } = req.params;
+        const { email } = req.params;
 
-        if (!id) generateError('Id is required', 400);
+        if (!email) generateError('Email is required', 400);
 
-        const user = await getUserById(id);
+        const user = await getUserByEmail(email);
 
         res.status(200).json({
-            message: 'User found',
+            message: 'Usuario encontrado',
             user,
         });
     } catch (error) {
@@ -108,14 +127,14 @@ export async function updateUserPasswordController(req, res, next) {
 
 export async function deleteUserController(req, res, next) {
     try {
-        const { id } = req.params;
+        const { email } = req.params;
 
-        if (!id) generateError('Id is required', 400);
+        if (!email) generateError('Email es requerido', 400);
 
-        await deleteUser(id);
+        await deleteUser(email);
 
         res.status(200).json({
-            message: 'User deleted',
+            message: 'Usuario eliminado',
         });
     } catch (error) {
         next(error);

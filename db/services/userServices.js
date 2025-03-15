@@ -11,16 +11,40 @@ export async function registerUser(data) {
         return user;
     } catch (error) {
         console.log(error);
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            const field = error.errors[0].path;
+            const fieldMessages = {
+                email: 'Este correo electrónico ya está registrado',
+                phone_number: 'Este número de teléfono ya está registrado',
+                // Añade otros campos únicos según sea necesario
+            };
+            generateError(fieldMessages[field] || `El campo ${field} ya existe`, 400);
+        } else {
+            throw error;
+        }
+    }
+}
+
+export async function getUserById(userId) {
+    try {
+        const user = await User.findByPk(userId, {
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt'],
+            },
+        });
+
+        if (!user) generateError('User not found', 404);
+
+        return user;
+    } catch (error) {
         generateError(error.message, error.status);
     }
 }
 
-export async function getUserById(id) {
+export async function getUserByEmail(email) {
     try {
-        const user = await User.findByPk(id, {
-            attributes: {
-                exclude: ['password', 'createdAt', 'updatedAt'],
-            },
+        const user = await User.findOne({
+            where: { email },
         });
 
         if (!user) generateError('User not found', 404);
@@ -98,11 +122,11 @@ export async function updateEmail(newEmail, id) {
     }
 }
 
-export async function deleteUser(id) {
+export async function deleteUser(email) {
     try {
         const user = await User.destroy({
             where: {
-                id: id,
+                email: email,
             },
         });
 

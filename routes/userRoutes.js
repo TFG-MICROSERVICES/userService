@@ -6,6 +6,7 @@ import {
     updateUserController,
     updateUserEmailController,
     deleteUserController,
+    getUserByEmailController,
 } from '../controllers/userControllers.js';
 import { validateApiKey } from '../middlewares/validateApiKey.js';
 
@@ -13,14 +14,16 @@ const router = express.Router();
 
 router.post('/register', validateApiKey, registerUserController);
 
-router.get('/:id', validateApiKey, getUserByIdController);
+router.get('/:user_id', validateApiKey, getUserByIdController);
+
+router.get('/email/:email', validateApiKey, getUserByEmailController);
 
 router.get('/', validateApiKey, getUsersController);
 
 router.put('/:id', validateApiKey, updateUserController);
 
-router.patch('/emil/:id', validateApiKey, updateUserEmailController);
+router.patch('/email/:id', validateApiKey, updateUserEmailController);
 
-router.delete('/:id', validateApiKey, deleteUserController);
+router.delete('/:email', validateApiKey, deleteUserController);
 
 export default router;
