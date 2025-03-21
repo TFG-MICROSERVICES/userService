@@ -16,7 +16,7 @@ router.post('/register', validateApiKey, registerUserController);
 
 router.get('/:user_id', validateApiKey, getUserByIdController);
 
-router.get('/email/:email', validateApiKey, getUserByEmailController);
+router.post('/email', validateApiKey, getUserByEmailController);
 
 router.get('/', validateApiKey, getUsersController);
 

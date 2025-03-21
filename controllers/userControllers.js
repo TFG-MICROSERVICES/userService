@@ -40,7 +40,7 @@ export async function getUserByIdController(req, res, next) {
 
 export async function getUserByEmailController(req, res, next) {
     try {
-        const { email } = req.params;
+        const { email } = req.body;
 
         if (!email) generateError('Email is required', 400);
 
