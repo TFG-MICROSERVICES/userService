@@ -81,21 +81,19 @@ export async function getUsers(search = null) {
     }
 }
 
-export async function updateUser(data, id) {
+export async function updateUser(data, email) {
     try {
         console.log(data);
 
         const [updatedRows] = await User.update(data, {
             where: {
-                id: id,
+                email: email,
             },
         });
 
         if (updatedRows === 0) generateError('User not updated', 404);
 
-        const newUser = getUserById(id);
-
-        return newUser;
+        return true;
     } catch (error) {
         generateError(error.message, error.status);
     }

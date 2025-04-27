@@ -1,6 +1,6 @@
 import { registerUser, getUserById, getUserByEmail, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
 import { generateError } from '../utils/generateError.js';
-import { userSchema } from '../schemas/userSchema.js';
+import { updateUserSchema, userSchema } from '../schemas/userSchema.js';
 
 export async function registerUserController(req, res, next) {
     try {
@@ -72,14 +72,13 @@ export async function getUsersController(req, res, next) {
 export async function updateUserController(req, res, next) {
     try {
         const { email } = req.params;
-        const validate = await userSchema.validateAsync(req.body, { stripUnknown: true });
-
-        if (!email) generateError('Email is required', 400);
+        const validate = await updateUserSchema.validateAsync(req.body, { stripUnknown: true });
 
         const user = await updateUser(validate, email);
 
         res.status(200).json({
-            message: 'User updated',
+            status: 200,
+            message: 'Perfil actualizado correctamente',
             user,
         });
     } catch (error) {

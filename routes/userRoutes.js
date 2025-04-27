@@ -20,7 +20,7 @@ router.post('/email', validateApiKey, getUserByEmailController);
 
 router.get('/', validateApiKey, getUsersController);
 
-router.put('/:id', validateApiKey, updateUserController);
+router.put('/:email', validateApiKey, updateUserController);
 
 router.patch('/email/:id', validateApiKey, updateUserEmailController);
 
