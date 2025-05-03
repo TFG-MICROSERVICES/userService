@@ -1,4 +1,4 @@
-import { registerUser, getUserById, getUserByEmail, getUsers, updateUser, updateEmail, deleteUser } from '../db/services/userServices.js';
+import { registerUser, getUserById, getUserByEmail, getUsers, updateUser, updateEmail, deleteUser, getUsersByArrayService } from '../db/services/userServices.js';
 import { generateError } from '../utils/generateError.js';
 import { updateUserSchema, userSchema } from '../schemas/userSchema.js';
 
@@ -61,10 +61,28 @@ export async function getUsersController(req, res, next) {
         const users = await getUsers(search);
 
         res.status(200).json({
-            message: 'Users found',
+            message: 'Usuarios encontrados correctamente',
             users,
         });
     } catch (error) {
+        next(error);
+    }
+}
+
+export const getUsersByArrayController = async (req, res, next) =>{
+    try{    
+        const { data } = req.body;
+
+        console.log(data);
+
+        const users = await getUsersByArrayService(data);
+
+        res.status(200).json({
+            status: 200,
+            message: 'Usuarios encontrados correctamente',
+            data: users
+        })
+    }catch(error){
         next(error);
     }
 }

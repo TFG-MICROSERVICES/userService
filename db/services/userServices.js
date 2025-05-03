@@ -81,10 +81,29 @@ export async function getUsers(search = null) {
     }
 }
 
+export const getUsersByArrayService = async (data) => {
+    try {
+        const userIds = data.map(obj => obj.user_email);
+
+        const users = await User.findAll({
+            where: {
+                email: {
+                    [Op.in]: userIds
+                }
+            },
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt'],
+            },
+        });
+
+        return users;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function updateUser(data, email) {
     try {
-        console.log(data);
-
         const [updatedRows] = await User.update(data, {
             where: {
                 email: email,
