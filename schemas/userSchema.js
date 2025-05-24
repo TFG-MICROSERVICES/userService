@@ -2,45 +2,45 @@ import Joi from 'joi';
 
 export const userSchema = Joi.object({
     main_sport_id: Joi.number().integer().allow(null).messages({
-        'number.base': 'main_sport_id must be a number',
-        'number.integer': 'main_sport_id must be an integer',
+        'number.base': 'El ID del deporte principal debe ser un número',
+        'number.integer': 'El ID del deporte principal debe ser un número entero',
     }),
     name: Joi.string().max(255).required().messages({
-        'any.required': 'name is required',
-        'string.base': 'name must be a string',
-        'string.max': 'name must be at most 255 characters',
+        'any.required': 'El nombre es obligatorio',
+        'string.base': 'El nombre debe ser una cadena de texto',
+        'string.max': 'El nombre no puede exceder los 255 caracteres',
     }),
     lastName: Joi.string().max(255).required().messages({
-        'any.required': 'lastName is required',
-        'string.base': 'lastName must be a string',
-        'string.max': 'lastName must be at most 255 characters',
+        'any.required': 'Los apellidos son obligatorios',
+        'string.base': 'Los apellidos deben ser una cadena de texto',
+        'string.max': 'Los apellidos no pueden exceder los 255 caracteres',
     }),
     email: Joi.string().email().max(255).required().messages({
-        'any.required': 'email is required',
-        'string.base': 'email must be a string',
-        'string.email': 'email must be a valid email',
-        'string.max': 'email must be at most 255 characters',
+        'any.required': 'El correo electrónico es obligatorio',
+        'string.base': 'El correo electrónico debe ser una cadena de texto',
+        'string.email': 'El correo electrónico debe ser válido',
+        'string.max': 'El correo electrónico no puede exceder los 255 caracteres',
     }),
     image_profile: Joi.string().allow(null, '').messages({
-        'string.base': 'image_profile must be a string',
+        'string.base': 'La imagen de perfil debe ser una cadena de texto',
     }),
     phone_number: Joi.string().max(20).allow(null, '').messages({
-        'string.base': 'phone_number must be a string',
-        'string.max': 'phone_number must be at most 20 characters',
+        'string.base': 'El número de teléfono debe ser una cadena de texto',
+        'string.max': 'El número de teléfono no puede exceder los 20 caracteres',
     }),
     birthdate: Joi.date().required().messages({
-        'any.required': 'birthdate is required',
-        'date.base': 'birthdate must be a date',
+        'any.required': 'La fecha de nacimiento es obligatoria',
+        'date.base': 'La fecha de nacimiento debe ser una fecha válida',
     }),
     city: Joi.string().max(255).required().messages({
-        'any.required': 'city is required',
-        'string.base': 'city must be a string',
-        'string.max': 'city must be at most 255 characters',
+        'any.required': 'La ciudad es obligatoria',
+        'string.base': 'La ciudad debe ser una cadena de texto',
+        'string.max': 'La ciudad no puede exceder los 255 caracteres',
     }),
     autonomous_region: Joi.string().max(255).required().messages({
-        'any.required': 'country is required',
-        'string.base': 'country must be a string',
-        'string.max': 'country must be at most 255 characters',
+        'any.required': 'La comunidad autónoma es obligatoria',
+        'string.base': 'La comunidad autónoma debe ser una cadena de texto',
+        'string.max': 'La comunidad autónoma no puede exceder los 255 caracteres',
     }),
 });
 

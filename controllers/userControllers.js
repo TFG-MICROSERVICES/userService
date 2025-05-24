@@ -6,8 +6,6 @@ export async function registerUserController(req, res, next) {
     try {
         const validate = await userSchema.validateAsync(req.body, { stripUnknown: true });
 
-        console.log('Validate', validate);
-
         const user = await registerUser(validate);
 
         res.status(201).json({

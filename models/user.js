@@ -29,10 +29,6 @@ export const User = database.define(
             unique: true,
             max: 255,
         },
-        image_profile: {
-            type: DataTypes.TEXT('long'),
-            allowNull: true,
-        },
         phone_number: {
             type: DataTypes.STRING,
             allowNull: true,
